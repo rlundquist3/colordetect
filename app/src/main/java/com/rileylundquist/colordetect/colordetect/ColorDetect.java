@@ -35,6 +35,11 @@ public class ColorDetect {
     private int ratio = 3;
     private int kernel_size = 3;
 
+    private ColorObject blue = new ColorObject("blue");
+    private ColorObject yellow = new ColorObject("yellow");
+    private ColorObject red = new ColorObject("red");
+    private ColorObject green = new ColorObject("green");
+
     public ColorDetect() {
 
     }
@@ -161,26 +166,27 @@ public class ColorDetect {
 
         Imgproc.cvtColor(cameraFeed, hsv, Imgproc.COLOR_BGR2HSV);
 
-        ColorObject blue = new ColorObject("blue");
-        Imgproc.cvtColor(cameraFeed, hsv, Imgproc.COLOR_BGR2HSV);
+        //4 threads here
+        //ColorObject blue = new ColorObject("blue");
+        //Imgproc.cvtColor(cameraFeed, hsv, Imgproc.COLOR_BGR2HSV);
         Core.inRange(hsv, blue.getHsvMin(), blue.getHsvMax(), threshold);
         morphOps(threshold);
         trackObject(blue, threshold, hsv, cameraFeed);
 
-        ColorObject green = new ColorObject("green");
-        Imgproc.cvtColor(cameraFeed, hsv, Imgproc.COLOR_BGR2HSV);
+        //ColorObject green = new ColorObject("green");
+        //Imgproc.cvtColor(cameraFeed, hsv, Imgproc.COLOR_BGR2HSV);
         Core.inRange(hsv, green.getHsvMin(), green.getHsvMax(), threshold);
         morphOps(threshold);
         trackObject(green, threshold, hsv, cameraFeed);
 
-        ColorObject yellow = new ColorObject("yellow");
-        Imgproc.cvtColor(cameraFeed, hsv, Imgproc.COLOR_BGR2HSV);
+        //ColorObject yellow = new ColorObject("yellow");
+        //Imgproc.cvtColor(cameraFeed, hsv, Imgproc.COLOR_BGR2HSV);
         Core.inRange(hsv, yellow.getHsvMin(), yellow.getHsvMax(), threshold);
         morphOps(threshold);
         trackObject(yellow, threshold, hsv, cameraFeed);
 
-        ColorObject red = new ColorObject("red");
-        Imgproc.cvtColor(cameraFeed, hsv, Imgproc.COLOR_BGR2HSV);
+        //ColorObject red = new ColorObject("red");
+        //Imgproc.cvtColor(cameraFeed, hsv, Imgproc.COLOR_BGR2HSV);
         Core.inRange(hsv, red.getHsvMin(), red.getHsvMax(), threshold);
         morphOps(threshold);
         trackObject(red, threshold, hsv, cameraFeed);
