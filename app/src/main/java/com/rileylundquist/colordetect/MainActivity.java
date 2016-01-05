@@ -17,12 +17,16 @@ import android.view.SurfaceView;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.rileylundquist.colordetect.colordetect.ColorDetect;
+
 public class MainActivity extends Activity implements CvCameraViewListener2 {
     private static final String TAG = "OCVSample::Activity";
 
     private CameraBridgeViewBase mOpenCvCameraView;
     private boolean              mIsJavaCamera = true;
     private MenuItem             mItemSwitchCamera = null;
+    private Mat                  mRgba;
+    private ColorDetect          colorDetect;
 
     private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
         @Override
@@ -69,6 +73,8 @@ public class MainActivity extends Activity implements CvCameraViewListener2 {
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
 
         mOpenCvCameraView.setCvCameraViewListener(this);
+
+        colorDetect = new ColorDetect();
     }
 
     @Override
@@ -133,12 +139,16 @@ public class MainActivity extends Activity implements CvCameraViewListener2 {
     }
 
     public void onCameraViewStarted(int width, int height) {
+        mRgba = new Mat();
     }
 
     public void onCameraViewStopped() {
+        mRgba.release();
     }
 
     public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
-        return inputFrame.rgba();
+        mRgba = inputFrame.rgba();
+
+        return colorDetect.detect(mRgba);
     }
 }
