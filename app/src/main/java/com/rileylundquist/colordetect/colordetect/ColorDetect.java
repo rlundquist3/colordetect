@@ -40,6 +40,8 @@ public class ColorDetect {
     private ColorObject red = new ColorObject("red");
     private ColorObject green = new ColorObject("green");
 
+    private ColorObject[] colors = {blue, yellow, red, green};
+
     public ColorDetect() {
 
     }
@@ -166,6 +168,13 @@ public class ColorDetect {
 
         Imgproc.cvtColor(cameraFeed, hsv, Imgproc.COLOR_BGR2HSV);
 
+        for (int i=0; i<colors.length; i++) {
+            Core.inRange(hsv, colors[i].getHsvMin(), colors[i].getHsvMax(), threshold);
+            morphOps(threshold);
+            trackObject(colors[i], threshold, hsv, cameraFeed);
+        }
+
+        /*
         //4 threads here
         //ColorObject blue = new ColorObject("blue");
         //Imgproc.cvtColor(cameraFeed, hsv, Imgproc.COLOR_BGR2HSV);
@@ -190,6 +199,7 @@ public class ColorDetect {
         Core.inRange(hsv, red.getHsvMin(), red.getHsvMax(), threshold);
         morphOps(threshold);
         trackObject(red, threshold, hsv, cameraFeed);
+        */
 
         return cameraFeed;
     }
